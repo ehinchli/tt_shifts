@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'timeclock:clock' %}">Clock</a></li>
+        <li><a href="{% url 'timeclock:sheet' %}">Shifts</a></li>
+    </ul>
+</nav>
+{% block content %}
+{% endblock %}
+</body>
+</html>

@@ -7,10 +7,6 @@ from .forms import ClockForm, ShiftCorrectionForm
 from .models import Shift
 
 
-from django.utils import timezone
-
-from django.utils import timezone
-
 class ClockView(FormView):
     template_name = 'clock.html'
     form_class = ClockForm
@@ -66,8 +62,6 @@ class ClockView(FormView):
                 current_shift.save()
         return super().form_valid(form)
 
-        return super().form_valid(form)
-
 
 class ShiftListView(ListView):
     model = Shift
@@ -85,13 +79,11 @@ class ShiftCorrectionView(FormView):
 
     def get_initial(self):
         shift = get_object_or_404(Shift, pk=self.kwargs['shift_id'])
-        return {
-            'punch_in': shift.punch_in,
-            'punch_out': shift.punch_out,
-            'break_start': shift.break_start,
-            'break_end': shift.break_end,
-            'note': shift.note
-        }
+        return {'punch_in': shift.punch_in,
+                'punch_out': shift.punch_out,
+                'break_start': shift.break_start,
+                'break_end': shift.break_end,
+                'note': shift.note}
 
     def form_valid(self, form):
         shift = get_object_or_404(Shift, pk=self.kwargs['shift_id'])

@@ -1,41 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Shift List</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Punch In</th>
-        <th>Punch Out</th>
-        <th>Break Start</th>
-        <th>Break End</th>
-        <th>Note</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for shift in shift_list %}
+    <h1>Shift List</h1>
+    <table>
+        <thead>
         <tr>
-          <td><a href="{% url 'timeclock:correction' shift.id %}">{{ shift.id }}</a></td>
-          <td>{{ shift.punch_in }}</td>
-          <td>{{ shift.punch_out }}</td>
-          <td>{{ shift.break_start }}</td>
-          <td>{{ shift.break_end }}</td>
-          <td>{{ shift.note }}</td>
-          <td>
-            {% if shift.punch_out %}
-              <span>Clocked out</span>
-            {% else %}
-              <a href="{% url 'timeclock:correction' shift.id %}?action=clock_out">Clock out</a>
-            {% endif %}
-          </td>
+            <th>ID</th>
+            <th>Punch In</th>
+            <th>Punch Out</th>
+            <th>Break Start</th>
+            <th>Break End</th>
+            <th>Note</th>
+            <th>Actions</th>
         </tr>
-      {% empty %}
-        <tr>
-          <td colspan="7">No shifts found.</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+        </thead>
+        <tbody>
+        {% for shift in shift_list %}
+            <tr>
+                <td><a href="{% url 'timeclock:correction' shift.id %}">{{ shift.id }}</a></td>
+                <td>{{ shift.punch_in }}</td>
+                <td>{{ shift.punch_out }}</td>
+                <td>{{ shift.break_start }}</td>
+                <td>{{ shift.break_end }}</td>
+                <td>{{ shift.note }}</td>
+                <td>
+                    {% if shift.punch_out %}
+                        <span>Clocked out</span>
+                    {% else %}
+                        <a href="{% url 'timeclock:correction' shift.id %}?action=clock_out">Clock out</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="7">No shifts found.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
