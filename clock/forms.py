@@ -11,6 +11,10 @@ class ShiftCorrectionForm(forms.ModelForm):
                   'corrected_break_start',
                   'corrected_break_end',
                   'note']
+        widgets = {'corrected_punch_in': forms.DateInput(attrs={'type': 'date'}),
+                   'corrected_punch_out': forms.DateInput(attrs={'type': 'date'}),
+                   'corrected_break_start': forms.DateInput(attrs={'type': 'date'}),
+                   'corrected_break_end': forms.DateInput(attrs={'type': 'date'})}
 
 
 class ClockForm(forms.Form):

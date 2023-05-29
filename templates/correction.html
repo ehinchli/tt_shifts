@@ -1,19 +1,5 @@
 <h2>Shift Correction</h2>
 <form method="POST">
     {% csrf_token %}
-    <label for="punch_in">Punch In:</label>
-    <input type="datetime-local" name="punch_in"
-           value="{{ shift.punch_in|date:'Y-m-d' }}T{{ shift.punch_in|time:'H:i' }}" required><br><br>
-    <label for="break_start">Break Start:</label>
-    <input type="datetime-local" name="break_start"
-           value="{{ shift.break_start|date:'Y-m-d' }}T{{ shift.break_start|time:'H:i' }}"><br><br>
-    <label for="break_end">Break End:</label>
-    <input type="datetime-local" name="break_end"
-           value="{{ shift.break_end|date:'Y-m-d' }}T{{ shift.break_end|time:'H:i' }}"><br><br>
-    <label for="punch_out">Punch Out:</label>
-    <input type="datetime-local" name="punch_out"
-           value="{{ shift.punch_out|date:'Y-m-d' }}T{{ shift.punch_out|time:'H:i' }}" required><br><br>
-    <label for="note">Note:</label>
-    <textarea name="note" rows="4" cols="50"></textarea><br><br>
-    <input type="submit" value="Submit">
+    {{ form.as_p }}
 </form>
