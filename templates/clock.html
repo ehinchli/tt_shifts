@@ -1,0 +1,41 @@
+<h2>Time Clock</h2>
+
+{% if clocked_in %}
+    {% if break_start_time and not break_end_time %}
+        <p>Shift Start Time: {{ shift_start_time }}</p>
+        <p>Break Start Time: {{ break_start_time }}</p>
+        <p>Break Length: <span id="break-length"></span></p>
+    {% else %}
+        <p>Shift Start Time: {{ shift_start_time }}</p>
+        <p>Shift Length: <span id="shift-length"></span></p>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="clock_out">
+        <input type="submit" value="Clock Out">
+    </form>
+{% else %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="clock_in">
+        <input type="submit" value="Clock In">
+    </form>
+{% endif %}
+
+<script>
+    {% if clocked_in %}
+        const shiftStart = new Date('{{ shift_start_time|date:"Y-m-d H:i:s" }}');
+        const shiftLengthElement = document.getElementById('shift-length');
+
+        function formatTime(ms) {
+            const [h, m, s] = new Date(ms).toISOString().substr(11, 8).split(':');
+            return `${h.padStart(2, '0')}:${m}:${s}`;
+        }
+
+        setInterval(() => {
+            shiftLengthElement.textContent = formatTime(Date.now() - shiftStart);
+        }, 1000);
+    {% endif %}
+</script>
+
+

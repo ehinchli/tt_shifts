@@ -1,0 +1,34 @@
+<h2>Shift Sheet</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Punch In</th>
+        <th>Punch Out</th>
+        <th>Break Start</th>
+        <th>Break End</th>
+        <th>Duration</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for shift in shift_list %}
+        <tr>
+            {% if shift.corrected_punch_in %}
+                <td>{{ shift.id }}</td>
+                <td>{{ shift.corrected_punch_in }}</td>
+                <td>{{ shift.corrected_punch_out }}</td>
+                <td>{{ shift.corrected_break_start }}</td>
+                <td>{{ shift.corrected_break_end }}</td>
+                <td>N/A</td>
+            {% else %}
+                <td>{{ shift.id }}</td>
+                <td>{{ shift.punch_in }}</td>
+                <td>{{ shift.punch_out }}</td>
+                <td>{{ shift.break_start }}</td>
+                <td>{{ shift.break_end }}</td>
+                <td>{{ shift.duration }}</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
