@@ -26,4 +26,3 @@ class Shift(models.Model):
             break_time = self.break_end - self.break_start
             total_time -= break_time
         return total_time
-

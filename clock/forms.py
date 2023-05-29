@@ -6,7 +6,12 @@ from .models import Shift
 class ShiftCorrectionForm(forms.ModelForm):
     class Meta:
         model = Shift
-        fields = ['corrected_punch_in', 'corrected_punch_out', 'corrected_break_start', 'corrected_break_end', 'note']
+        fields = ['corrected_punch_in',
+                  'corrected_punch_out',
+                  'corrected_break_start',
+                  'corrected_break_end',
+                  'note']
+
 
 class ClockForm(forms.Form):
     ACTION_CHOICES = [
