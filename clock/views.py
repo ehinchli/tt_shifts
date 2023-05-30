@@ -13,8 +13,7 @@ class ClockView(FormView):
     success_url = '/clock/clock/'
 
     def get_initial(self):
-        current_shift = Shift.objects.filter(
-            user=self.request.user, punch_out__isnull=True).first()
+        current_shift = Shift.objects.filter(user=self.request.user, punch_out__isnull=True).first()
         if current_shift:
             if current_shift.break_start and not current_shift.break_end:
                 return {'action': 'end_break'}
@@ -25,8 +24,7 @@ class ClockView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        current_shift = Shift.objects.filter(
-            user=self.request.user, punch_out__isnull=True).first()
+        current_shift = Shift.objects.filter(user=self.request.user, punch_out__isnull=True).first()
         if current_shift:
             context['clocked_in'] = True
             context['shift_start_time'] = current_shift.punch_in
@@ -45,8 +43,7 @@ class ClockView(FormView):
             user=self.request.user, punch_out__isnull=True).first()
         if action == 'clock_in':
             if not current_shift:
-                Shift.objects.create(user=self.request.user,
-                                     punch_in=timezone.now())
+                Shift.objects.create(user=self.request.user, punch_in=timezone.now())
         elif action == 'clock_out':
             if current_shift:
                 current_shift.punch_out = timezone.now()
@@ -79,11 +76,12 @@ class ShiftCorrectionView(FormView):
 
     def get_initial(self):
         shift = get_object_or_404(Shift, pk=self.kwargs['shift_id'])
-        return {'punch_in': shift.punch_in,
-                'punch_out': shift.punch_out,
-                'break_start': shift.break_start,
-                'break_end': shift.break_end,
-                'note': shift.note}
+        return {
+            'corrected_punch_in': shift.punch_in.strftime('%Y-%m-%dT%H:%M'),
+            'corrected_punch_out': shift.punch_out.strftime('%Y-%m-%dT%H:%M'),
+            'corrected_break_start': shift.break_start.strftime('%Y-%m-%dT%H:%M') if shift.break_start else None,
+            'corrected_break_end': shift.break_end.strftime('%Y-%m-%dT%H:%M') if shift.break_end else None
+        }
 
     def form_valid(self, form):
         shift = get_object_or_404(Shift, pk=self.kwargs['shift_id'])

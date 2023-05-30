@@ -1,5 +1,6 @@
 <h2>Shift Correction</h2>
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_div }}
+    {{ form.as_p}}
+    <input type="submit" value="Submit">
 </form>

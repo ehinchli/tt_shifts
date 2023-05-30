@@ -1,39 +1,60 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %}{% load duration_filter %}
 {% block content %}
     <h1>Shift List</h1>
     <table>
         <thead>
         <tr>
             <th>ID</th>
+            <th>Duration</th>
+            <th>Note</th>
             <th>Punch In</th>
             <th>Punch Out</th>
             <th>Break Start</th>
             <th>Break End</th>
-            <th>Note</th>
-            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         {% for shift in shift_list %}
             <tr>
-                <td><a href="{% url 'timeclock:correction' shift.id %}">{{ shift.id }}</a></td>
-                <td>{{ shift.punch_in }}</td>
-                <td>{{ shift.punch_out }}</td>
-                <td>{{ shift.break_start }}</td>
-                <td>{{ shift.break_end }}</td>
-                <td>{{ shift.note }}</td>
                 <td>
-                    {% if shift.punch_out %}
-                        <span>Clocked out</span>
-                    {% else %}
-                        <a href="{% url 'timeclock:correction' shift.id %}?action=clock_out">Clock out</a>
+                    <a href="{% url 'timeclock:correction' shift.id %}">
+                        {{ shift.id }}
+                    </a>
+                </td>
+                <td>{{ shift.duration|duration }}</td>
+                <td>
+                    {% if shift.note %}
+                        {{ shift.note }}
                     {% endif %}
                 </td>
-            </tr>
-        {% empty %}
-            <tr>
-                <td colspan="7">No shifts found.</td>
+                <td>
+                    {% if shift.corrected_punch_in %}
+                        {{ shift.corrected_punch_in|date:"M d - f A" }}*
+                    {% else %}
+                        {{ shift.punch_in|date:"M d - f A" }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if shift.corrected_punch_out %}
+                        {{ shift.corrected_punch_out|date:"M d - f A" }}*
+                    {% else %}
+                        {{ shift.punch_out|date:"M d - f A" }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if shift.corrected_break_start %}
+                        {{ shift.corrected_break_start }}*
+                    {% else %}
+                        {{ shift.break_start|time }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if shift.corrected_break_end %}
+                        {{ shift.corrected_break_end }}*
+                    {% else %}
+                        {{ shift.break_end|time }}
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
