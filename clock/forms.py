@@ -1,11 +1,11 @@
 from django import forms
 
-from .models import Shift
+from .models import ClockShift
 
 
 class ShiftCorrectionForm(forms.ModelForm):
     class Meta:
-        model = Shift
+        model = ClockShift
         fields = ['corrected_punch_in', 'corrected_punch_out', 'corrected_break_start', 'corrected_break_end', 'note']
 
         widgets = {'corrected_punch_in': forms.DateInput(attrs={'type': 'datetime-local'}),

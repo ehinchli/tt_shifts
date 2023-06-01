@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import Shift
+from .models import ClockShift
 
-admin.site.register(Shift)
+admin.site.register(ClockShift)
